@@ -1,0 +1,153 @@
+Step 1 :
+Install Node.js on Machine
+
+Step 2:
+Create package.json file using NMP from command propmt. Right click on solution and click open command line and select Developer Command Prompt
+
+npm init -y
+
+Step 3: 
+Install Webpack Right click on solution and click open command line and select Developer Command Prompt
+npm install webpack --save-dev
+
+Step 4:
+Install webpack-cli. Right click on solution and  click on Quick Install package.
+npm install webpack-cli --save-dev
+
+Step 5:
+Install @types/Jquery. Right click on solution and  click on Quick Install package.
+npm install jquery --save-dev
+npm install typescript --save-dev
+npm install ts-loader --save-dev
+npm install css-loader style-loader --save-dev
+
+npm install --save-dev mini-css-extract-plugin
+npm install optimize-css-assets-webpack-plugin --save-dev
+
+
+Step 6:
+Install Babel and Other Packages
+npm install babel-core babel-loader --save-dev
+npm install babel-preset-es2015 --save-dev
+npm install babel-preset-stage-0 --save-dev
+npm install babel-polyfill --save
+
+npm install babel-runtime --save
+npm install babel-plugin-transform-runtime --save-dev
+
+Step 7:
+Create a webpack.config.js file and add the script file. Here we are creating multiple bundling file. Please check webpack.config.file
+
+var path = require("path");
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
+module.exports = {
+    // entry: {
+    //   demo:"../../../Batch5/Day17/ES6/src/ClassDemo/demo.js",
+    //   main:"../../../Batch5/Day17/ES6/src/ClassDemo/main.js"
+    // },
+    mode:"production", // development
+    entry:[
+
+        "../../../Batch5/Day17/ES6/src/styles/test1.css",
+        "../../../Batch5/Day17/ES6/src/styles/testcss.css",
+
+        "../../../Batch5/Day17/ES6/src/ClassDemo/demo.js",
+        "../../../Batch5/Day17/ES6/src/ClassDemo/main.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/AbstractClass/parentAbstract.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/AbstractClass/childImplement.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/AbstractClass/mainAbstractDemo.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/Interface/IShape.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/Interface/Circle.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/Interface/rectangle.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/Interface/Square.js",
+        "../../../Batch5/Day17/ES6/src/OOPs/Interface/shapeContext.js",
+
+        "../../../Batch5/Day17/ES6/src/OOPs/mainTypescript.ts",
+        
+        
+        "../../../Batch5/Day17/ES6/src/OOPs/Interface/mainInterfaceDemo.js"
+       
+        
+    ],
+    output: {
+        publicPath: "./dist/",
+        path: path.join(__dirname, "./dist/"),
+        //filename: "[name].build.js",
+        filename:"build.js",
+        library: 'appGlobal'
+    },
+    module: {
+        rules: [
+        // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+            { test: /\.tsx?$/, loader: "ts-loader" },
+            //{test:/\.css?$/,loaders: ['style-loader', 'css-loader']}
+             {
+                 test: /\.css$/,
+                 use: [
+                  {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                      // you can specify a publicPath here
+                      // by default it uses publicPath in webpackOptions.output
+                      publicPath: '../ES6/dist/',
+                      hmr: process.env.NODE_ENV === 'development'
+                      //minimize:true
+                    },
+                  },
+                  'css-loader',
+                ]
+              }
+        ]
+   },
+   resolve: {
+    // Add `.ts` and `.tsx` as a resolvable extension.
+    extensions: [".ts", ".tsx", ".js",".jsx",".json"]
+   },
+   plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false, // Enable to remove warnings about conflicting order
+    }),
+    new OptimizeCSSAssetsPlugin({})
+  ]
+};
+
+
+Step 9:
+go to package.json file and add following command on script section
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wbp": "webpack"
+  }
+
+
+Step 10: Write tsConfig
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true
+  }
+}
+
+Step 11:
+Write a .js files
+
+Step 12:
+execute following command to run webpack
+npm run wbp.
+
+Step 13:
+Run wbp Command on build
+go to terminal->Configure Default Build Task->npm:wbp->it will create tasks.json file then build a solution using 
+ctrl+shift+b
